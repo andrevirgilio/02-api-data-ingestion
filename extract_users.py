@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+from datetime import datetime
 
 
 def extract_users():
@@ -24,9 +25,15 @@ def transform_users(users):
             "website"
         ]
     ]
+    df["ingestion_date"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
     return df
 
 def load_users(df):
+    extraction_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    print(f"Extraction date: {extraction_date}")
+
     df.to_csv("users.csv", index=False)
 
     print("CSV file generated successfully")
